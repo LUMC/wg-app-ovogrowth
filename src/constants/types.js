@@ -16,3 +16,9 @@ export const application ={
     GET_APPLICATION_DONE: "GET_APPLICATION_DONE",
     GET_APPLICATION_FAILED: "GET_APPLICATION_FAILED"
 };
+
+export const modules ={
+    cellTypeViewer: {
+        GET_CELLS: "GET_CELLS"
+    }
+};

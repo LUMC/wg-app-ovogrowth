@@ -22,6 +22,8 @@ class Page extends Component{
                 if (setting.module === 'form'){
                     return(
                         <ModuleLoader
+                            modulesData={this.props.modulesData}
+                            getCells={this.props.getCells}
                             onSubmit={this.props.onSubmit}
                             page={this.props.config.name}
                             key={`module-${this.props.config.reference}-${key}`}
@@ -36,6 +38,8 @@ class Page extends Component{
                 }
                 return (
                     <ModuleLoader
+                        modulesData={this.props.modulesData}
+                        getCells={this.props.getCells}
                         page={this.props.config.name}
                         key={`module-${this.props.config.reference}-${key}`}
                         collection={this.getCollection(setting.collection)}

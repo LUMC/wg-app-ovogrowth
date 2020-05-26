@@ -10,6 +10,7 @@ import FormModule from "./FormModule";
 import {throwError} from "../../utils/generalHelpers";
 import {moduleError} from "../../constants/errorTypes";
 import ClusterViewer from "./ClusterViewer";
+import Page from "../Page";
 
 const ModuleLoader = (props) =>  {
     switch(props.setting.module) {
@@ -62,7 +63,10 @@ const ModuleLoader = (props) =>  {
             );
         case 'cluster-viewer':
             return (
-                <ClusterViewer/>
+                <ClusterViewer
+                    getCells={props.getCells}
+                    modulesData={props.modulesData.cellTypeViewer}
+                />
             )
         default:
             throwError.module(moduleError.INVALID_MODULE);
