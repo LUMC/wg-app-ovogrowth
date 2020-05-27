@@ -1,56 +1,78 @@
 import React, {Component} from 'react'
 import {Grid} from 'semantic-ui-react'
-import createPlotlyComponent from "react-plotly.js/factory";
-import Plotly from "plotly.js-basic-dist";
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 import _ from 'lodash'
-import Page from "../../Page";
 
 class ClusterViewer extends Component {
 
-    componentDidMount() {
-        this.props.getCells()
-    }
-
     createDataPoints = (data) =>{
-        console.log(data)
         const plotTraces = [];
         const clusters = _.groupBy(data, 'cluster_id')
         Object.keys(clusters).forEach( (key) => {
-            let items = _.remove(clusters[key], function (currentObject) {
-                return currentObject.count !== "nan";
+            const datapoints = clusters[key].map( (item) => {
+                return [parseFloat(item.tsne_1), parseFloat(item.tsne_2)]
             });
             const trace = {
-                x: _.map(items, 'tsne_1'),
-                y: _.map(items, 'tsne_2'),
-                mode: 'markers',
-                type: 'scatter',
-                name: key,
-                opacity: 0.5,
+                data: datapoints,
+                name: "Label "+key,
+                opacity: 0.7,
                 marker: {
-                    size: 20
-                }
+                    height: 1,
+                    width: 1,
+                    symbol: 'circle'
+                },
+                animation: false
             };
             plotTraces.push(trace)
         });
         return plotTraces
     }
     render() {
-        const Plot = createPlotlyComponent(Plotly);
         if (this.props.modulesData.cells.length < 1)return null
         return (
             <Grid.Column width={16}>
-                <Plot
-                    className={'full-size large'}
-                    data={this.createDataPoints(this.props.modulesData.cells)}
-                    layout={{
-                        showlegend: true,
-                        height: 600, hovermode: 'closest',
-                        yaxis:{
-                            title: "test"
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={{
+                        plotOptions: {
+                            series: {
+                                events: {
+                                    legendItemClick: function (e) {
+                                        e.preventDefault();
+                                    }
+                                }
+                            }
                         },
-                        xaxis:{
-                            title: "test"
-                        }
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'top',
+                            backgroundColor: '#FFFFFF'
+                        },
+                        chart: {
+                            type: 'scatter',
+                            zoomType:'xy',
+                            height: '800px'
+                        },
+                        exporting: {
+                            enabled: true
+                        },
+                        navigator: {
+                            enabled: true
+                        },
+                        title: {
+                            text: 'My chart'
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br>'
+                        },
+                        yAxis:[{
+                            lineWidth: 0,
+                            title:""
+                        }],
+                        allowPointSelect: false,
+                        series: this.createDataPoints(this.props.modulesData.cells)
                     }}
                 />
             </Grid.Column>

@@ -2,8 +2,13 @@
 import React, {Component} from 'react'
 import ModuleLoader from './modules/moduleLoader'
 import {Grid, Header} from "semantic-ui-react";
+import {pageLoader} from "./hooks/pageLoader";
 
 class Page extends Component{
+    state = {loaded: false}
+    componentDidMount() {
+        this.setState({loaded:true})
+    }
 
     getCollection (collection){
         if (!collection){
@@ -52,6 +57,9 @@ class Page extends Component{
     render() {
         if (!this.props.path){
             return null
+        }
+        if (!this.state.loaded){
+            return pageLoader(this.state.loaded)
         }
         return (
             <Grid>

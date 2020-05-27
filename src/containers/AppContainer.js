@@ -72,9 +72,10 @@ class AppContainer extends Component {
     }
     componentDidMount() {
         this.loadConfig();
+        this.props.getCells()
         setTimeout(function() {
             this.setState({render: true})
-        }.bind(this), 3000);
+        }.bind(this), 4000);
         setTimeout(
             () => {
                 this.setState({sloganText: true})
