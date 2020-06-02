@@ -10,7 +10,6 @@ import FormModule from "./FormModule";
 import {throwError} from "../../utils/generalHelpers";
 import {moduleError} from "../../constants/errorTypes";
 import ClusterViewer from "./ClusterViewer";
-import Page from "../Page";
 
 const ModuleLoader = (props) =>  {
     switch(props.setting.module) {

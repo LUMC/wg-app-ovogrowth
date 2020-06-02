@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.1",
+    "chart.js": "^2.9.3",
     "dygraphs": "^2.1.0",
     "highcharts": "^8.1.0",
     "highcharts-react-official": "^3.0.0",
@@ -13,8 +14,10 @@
     "plotly.js-basic-dist": "^1.54.1",
     "react": "^16.13.1",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-chartjs-2": "^2.9.0",
     "react-device": "^0.8.1",
     "react-dom": "^16.13.1",
+    "react-google-charts": "^3.0.15",
     "react-particles-js": "^2.7.1",
     "react-plotly.js": "^2.4.0",
     "react-pose": "^4.0.10",

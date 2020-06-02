@@ -9,6 +9,9 @@ class Page extends Component{
     componentDidMount() {
         this.setState({loaded:true})
     }
+    componentWillUnmount() {
+        this.setState({loaded: false})
+    }
 
     getCollection (collection){
         if (!collection){
@@ -58,9 +61,7 @@ class Page extends Component{
         if (!this.props.path){
             return null
         }
-        if (!this.state.loaded){
-            return pageLoader(this.state.loaded)
-        }
+        pageLoader(this.state.loaded)
         return (
             <Grid>
                 <Grid.Row>

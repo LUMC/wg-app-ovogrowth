@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom'
 
 export const pageLoader = (pageLoaded) => {
-    if(pageLoaded) return null;
-    alert('test')
-    return (
-        <div>
-            Loading
-        </div>
-    );
+    return ReactDOM.createPortal(
+        <>
+            tersttstst
+        </>,
+        document.getElementById('test')
+    )
 }
