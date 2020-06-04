@@ -8,7 +8,7 @@ import 'fs'
 import history from '../history'
 
 import {getConfig, getApplication} from '../actions/configActions'
-import {getCells, getGeneSuggestions} from '../actions/modules/cellTypeViewerActions'
+import {getCells, getCellsByGene, getGeneSuggestions, resetCellByGene} from '../actions/modules/cellTypeViewerActions'
 import {getCollections} from '../actions/collectionActions'
 import {Route, Router, Switch} from "react-router-dom";
 import Page from "../components/Page";
@@ -94,6 +94,8 @@ class AppContainer extends Component {
                                 {...props}
                                 modulesData={this.props.modules}
                                 getGeneSuggestions={this.props.getGeneSuggestions}
+                                getCellsByGene={this.props.getCellsByGene}
+                                resetCellByGene={this.props.resetCellByGene}
                                 path={'/'+item.reference}
                                 config={item}
                                 collections={this.props.collections}
@@ -123,6 +125,8 @@ class AppContainer extends Component {
                             <Page {...props}
                                   modulesData={this.props.modules}
                                   getGeneSuggestions={this.props.getGeneSuggestions}
+                                  getCellsByGene={this.props.getCellsByGene}
+                                  resetCellByGene={this.props.resetCellByGene}
                                   path={'/'+this.props.config[0].reference}
                                   config={this.props.config[0]}
                                   collections={this.props.collections}
@@ -184,7 +188,9 @@ const mapStateToProps = (state) => {
 };
 const cellTypeViewerActions  = {
     getCells,
-    getGeneSuggestions
+    getCellsByGene,
+    getGeneSuggestions,
+    resetCellByGene
 }
 export default connect(mapStateToProps,
     {

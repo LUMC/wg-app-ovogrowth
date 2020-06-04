@@ -20,6 +20,7 @@ export const application ={
 export const modules ={
     cellTypeViewer: {
         GET_CELLS: "GET_CELLS",
+        CLEAR_CELLS_BY_GENE: "CLEAR_CELLS_BY_GENE",
         GET_CELLS_BY_GENE: "GET_CELLS_BY_GENE",
         GET_GENE_SUGGESTION: "GET_GENE_SUGGESTION",
     }

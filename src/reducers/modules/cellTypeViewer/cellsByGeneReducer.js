@@ -1,9 +1,11 @@
 import {modules} from '../../../constants/types'
 
-export default (state=[], action) => {
+export default (state={}, action) => {
     switch (action.type) {
-        case modules.cellTypeViewer.GET_CELLS:
+        case modules.cellTypeViewer.GET_CELLS_BY_GENE:
             return action.payload;
+        case modules.cellTypeViewer.CLEAR_CELLS_BY_GENE:
+            return {}
         default:
             return state;
     }

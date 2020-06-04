@@ -65,7 +65,9 @@ const ModuleLoader = (props) =>  {
             return (
                 <ClusterViewer
                     getGeneSuggestions={props.getGeneSuggestions}
+                    getCellsByGene={props.getCellsByGene}
                     modulesData={props.modulesData.cellTypeViewer}
+                    resetCellByGene={props.resetCellByGene}
                 />
             )
         default:
