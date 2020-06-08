@@ -11,6 +11,9 @@ import {throwError} from "../../utils/generalHelpers";
 import {moduleError} from "../../constants/errorTypes";
 import ClusterViewer from "./ClusterViewer";
 import Page from "../Page";
+import {Form, Grid, Search} from "semantic-ui-react";
+import _ from "lodash";
+import GeneExpressionForm from "./ClusterViewer/modules/GeneExpressionForm";
 
 const ModuleLoader = (props) =>  {
     switch(props.setting.module) {
@@ -63,12 +66,14 @@ const ModuleLoader = (props) =>  {
             );
         case 'cluster-viewer':
             return (
-                <ClusterViewer
-                    getGeneSuggestions={props.getGeneSuggestions}
-                    getCellsByGene={props.getCellsByGene}
-                    modulesData={props.modulesData.cellTypeViewer}
-                    resetCellByGene={props.resetCellByGene}
-                />
+                <>
+                    <GeneExpressionForm
+                        getCellsByGene={props.getCellsByGene}
+                        getGeneSuggestions={props.getGeneSuggestions}
+                        modulesData={props.modulesData.cellTypeViewer}
+                    />
+
+                </>
             )
         default:
             throwError.module(moduleError.INVALID_MODULE);
