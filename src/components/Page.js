@@ -65,7 +65,6 @@ class Page extends Component{
         if (!this.props.path){
             return null
         }
-        pageLoader(this.state.loaded)
         return (
             <Grid>
                 <Grid.Row>

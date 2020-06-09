@@ -13,7 +13,7 @@ import ClusterViewer from "./ClusterViewer";
 import Page from "../Page";
 import {Form, Grid, Search} from "semantic-ui-react";
 import _ from "lodash";
-import GeneExpressionForm from "./ClusterViewer/modules/GeneExpressionForm";
+import GeneExpressionForm from "./ClusterViewer/items/GeneExpressionForm";
 
 const ModuleLoader = (props) =>  {
     switch(props.setting.module) {
@@ -67,10 +67,11 @@ const ModuleLoader = (props) =>  {
         case 'cluster-viewer':
             return (
                 <>
-                    <GeneExpressionForm
+                    <ClusterViewer
                         getCellsByGene={props.getCellsByGene}
                         getGeneSuggestions={props.getGeneSuggestions}
                         modulesData={props.modulesData.cellTypeViewer}
+                        resetCellByGene={props.resetCellByGene}
                     />
 
                 </>

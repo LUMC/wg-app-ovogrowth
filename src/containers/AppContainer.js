@@ -75,7 +75,7 @@ class AppContainer extends Component {
         this.props.getCells()
         setTimeout(function() {
             this.setState({render: true})
-        }.bind(this), 4000);
+        }.bind(this), 3000);
         setTimeout(
             () => {
                 this.setState({sloganText: true})

@@ -13,10 +13,10 @@ export const getGeneSuggestions = (searchTerm) => async (dispatch) =>{
     dispatch({type: modules.cellTypeViewer.GET_GENE_SUGGESTION, payload: result.data.data})
 };
 
-export const getCellsByGene = (geneId) => async (dispatch) =>{
+export const getCellsByGene = (geneId, geneName) => async (dispatch) =>{
     dispatch({type: modules.cellTypeViewer.CLEAR_CELLS_BY_GENE})
     const result = await SascWebApi.post('custom/data/cell-GE', {geneId:geneId})
-    dispatch({type: modules.cellTypeViewer.GET_CELLS_BY_GENE, payload: result.data})
+    dispatch({type: modules.cellTypeViewer.GET_CELLS_BY_GENE, payload: {data:result.data, geneId, geneName}})
 }
 export const resetCellByGene = () =>{
     return {type: modules.cellTypeViewer.CLEAR_CELLS_BY_GENE}

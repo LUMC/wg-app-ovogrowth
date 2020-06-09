@@ -1,14 +1,19 @@
 import React from 'react';
-import {Dimmer, Image, Loader, Segment} from "semantic-ui-react";
+import {Grid, Image, Segment} from "semantic-ui-react";
+import loadingLogo from '../../assets/img/short-paragraph.png'
 
-export const pageLoader = (props) => {
+const renderSegment = () =>{
     return (
-        <Segment>
-            <Dimmer active inverted>
-                <Loader inverted>Loading</Loader>
-            </Dimmer>
-            <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png'/>
+        <Segment loading>
+            <Image src={loadingLogo}/>
         </Segment>
     )
-
+}
+export default (props) => {
+    if (props.frame) return (<Grid.Row>
+        <Grid.Column width={16} textAlign={"center"}>
+            {renderSegment()}
+        </Grid.Column>
+    </Grid.Row>)
+    return renderSegment()
 }
