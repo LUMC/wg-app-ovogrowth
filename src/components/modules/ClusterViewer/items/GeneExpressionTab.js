@@ -15,18 +15,18 @@ class GeneExpressionForm extends Component {
         return (nextState.activeGene !== this.state.activeGene)
     }
 
-    renderPlotHeader = (plotType) =>{
+    renderPlotHeader = (plotType, extra ='') =>{
         const {activeGene} = this.props.modulesData
         return (
             <Header as='h4' icon textAlign='center'>
-                <Header.Content>{plotType} plot - expression of gene: {activeGene}</Header.Content>
+                <Header.Content>{plotType} plot - {extra} expression of gene: {activeGene}</Header.Content>
             </Header>
         )
     }
     renderViolinPlot = () => {
         return (
             <>
-                {this.renderPlotHeader('Violin')}
+                {this.renderPlotHeader('Violin', 'Top 500 cells per cluster: ')}
                 <Plot
                     className={'full-size large'}
                     data={this.createViolinDataPoints()}
@@ -34,7 +34,12 @@ class GeneExpressionForm extends Component {
                         height: 600,
                         hovermode: 'closest',
                         yaxis: {
+                            range: [0, 6],
                             zeroline: false,
+                        },
+                        xaxis: {
+                            showline: true,
+                            zeroline: true,
                         }
                     }}
                 />
@@ -51,10 +56,10 @@ class GeneExpressionForm extends Component {
         const plotTraces = [];
         const clusters = _.groupBy(this.props.modulesData.cellsByGene.cells, 'cluster_id')
         Object.keys(clusters).forEach((key) => {
+            const number = clusters[key].length
             const trace = {
-                y: _.map(clusters[key], 'CPM'),
+                y: _.map(clusters[key].slice(number-500, number), 'CPM'),
                 type: 'violin',
-                points: 'none',
                 opacity: 0.5,
                 meanline: {
                     visible: true
@@ -62,13 +67,12 @@ class GeneExpressionForm extends Component {
                 box: {
                     visible: true
                 },
-                boxpoints: false,
+                boxpoints: true,
                 line: {
                     color: 'black'
                 },
                 fillcolor: colors[key],
                 x0: "Cluster name"+key
-
             };
             plotTraces.push(trace)
         });
