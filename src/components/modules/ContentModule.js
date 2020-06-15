@@ -35,7 +35,7 @@ const ContentModule = (props) =>{
             <>
             {getTitle(pointer_set[props.setting.alias_ref].title)}
             <Grid.Row>
-                <Grid.Column>
+                <Grid.Column className={`container-${props.setting.alias_ref}`}>
                 {Parser(pointer_set[props.setting.alias_ref].content)}
                 </Grid.Column>
             </Grid.Row>
@@ -45,5 +45,26 @@ const ContentModule = (props) =>{
     return null
 
 };
+// const ContentModule = (props) =>{
+//     if (props.collection){
+//         if (!validateAttributes(props.collection[0], required_attributes)){
+//             throwError.moduleAttr(module, required_attributes);return null}
+//         const pointer_set = _.keyBy(props.collection, 'reference_alias');
+//         if (!validateReferenceAlias(props.setting.alias_ref, pointer_set)){
+//             throwError.module(moduleError.INVALID_MODULE_REF);return null}
+//         return (
+//             <>
+//                 {getTitle(pointer_set[props.setting.alias_ref].title)}
+//                 <Grid.Row>
+//                     <Grid.Column class={`container-${props.setting.alias_ref}`}>
+//                         {Parser(pointer_set[props.setting.alias_ref].content)}
+//                     </Grid.Column>
+//                 </Grid.Row>
+//             </>
+//         )
+//     }
+//     return null
+//
+// };
 
 export default ContentModule

@@ -120,3 +120,8 @@ a.blue.label{
 .full-size{
     width: 100% !important;
 }
+.container-intro-image p img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

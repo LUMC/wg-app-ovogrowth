@@ -22,8 +22,10 @@ class GeneExpressionForm extends Component {
         this.setState({value: ''})
     }
     componentDidMount() {
+
         const {activeGene} = this.props.modulesData
         if (activeGene !== this.state.value) this.setState({value: activeGene})
+
     }
 
     render() {
