@@ -4,7 +4,7 @@ import Plot from 'react-plotly.js';
 import _ from 'lodash'
 import PageLoader from "../../../hooks/pageLoader";
 
-const initialState = {dataReady: false}
+const initialState = {dataReady: false, clusters: {}}
 
 class GeneralCluser extends Component {
 
@@ -18,16 +18,16 @@ class GeneralCluser extends Component {
         const plotTraces = [];
         const clusters = _.groupBy(this.props.modulesData.cells, 'cluster_id')
         Object.keys(clusters).forEach((key) => {
+            const name =this.state.clusters[key]
             const trace = {
                 x: _.map(clusters[key], 'tsne_1'),
                 y: _.map(clusters[key], 'tsne_2'),
                 mode: 'markers',
                 type: 'scattergl',
-                name: key,
+                name: name,
                 text: _.map(clusters[key], 'cluster_id'),
-                hovertemplate: "<b>Cell-type cluster %{text}</b> <extra></extra>",
+                hovertemplate: `<b>Cluster %{text}, Cell type: ${name}</b> <extra></extra>`,
                 opacity: 0.5,
-
             };
             plotTraces.push(trace)
         });
@@ -56,6 +56,14 @@ class GeneralCluser extends Component {
                 />
             </>
         )
+    }
+    componentDidMount() {
+        if (_.isEmpty(this.state.clusters)){
+            this.setState({
+                clusters:
+                    _.mapValues(_.keyBy(_.values(this.props.collection), 'cluster_id'), 'annotation')
+            })
+        }
     }
     render() {
         if (this.props.modulesData.cells.length < 1) return <PageLoader frame={true} />

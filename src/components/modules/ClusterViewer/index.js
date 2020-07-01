@@ -25,6 +25,7 @@ class ClusterViewer extends Component {
                 />
                 <Suspense fallback={<PageLoader frame={true}/>}>
                 <GeneralCluser
+                    collection={this.props.collection}
                     modulesData={this.props.modulesData}
                 />
                 </Suspense>
@@ -32,6 +33,7 @@ class ClusterViewer extends Component {
                     (!_.isEmpty(this.props.modulesData.cellsByGene))?<PageLoader frame={true}/>:null
                 }>
                     <GeneExpressionTab
+                        collection={this.props.collection}
                         modulesData={this.props.modulesData}
                     />
                 </Suspense>

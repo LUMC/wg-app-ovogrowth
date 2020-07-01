@@ -4,7 +4,7 @@ import _ from 'lodash'
 import Plot from "react-plotly.js";
 import PageLoader from "../../../hooks/pageLoader";
 
-const initialState = {activeGene:''}
+const initialState = {activeGene:'', clusters:{}}
 
 class GeneExpressionForm extends Component {
 
@@ -14,6 +14,7 @@ class GeneExpressionForm extends Component {
         if(_.isEmpty(this.props.modulesData.cellsByGene)) return true
         return (nextState.activeGene !== this.state.activeGene)
     }
+
 
     renderPlotHeader = (plotType, extra ='') =>{
         const {activeGene} = this.props.modulesData
@@ -56,9 +57,9 @@ class GeneExpressionForm extends Component {
         const plotTraces = [];
         const clusters = _.groupBy(this.props.modulesData.cellsByGene.cells, 'cluster_id')
         Object.keys(clusters).forEach((key) => {
-            const number = clusters[key].length
             const trace = {
-                y: _.map(clusters[key].slice(number-500, number), 'CPM'),
+                y: _.map(clusters[key], 'CPM'),
+                name: this.state.clusters[key],
                 type: 'violin',
                 opacity: 0.5,
                 meanline: {
@@ -72,17 +73,29 @@ class GeneExpressionForm extends Component {
                     color: 'black'
                 },
                 fillcolor: colors[key],
-                x0: "Cluster name"+key
+                x0: this.state.clusters[key]
             };
             plotTraces.push(trace)
         });
         return plotTraces
     }
+    componentDidMount() {
+        if (_.isEmpty(this.state.clusters)){
+            this.setState({
+                clusters:
+                    _.mapValues(_.keyBy(_.values(this.props.collection), 'cluster_id'), 'annotation')
+            })
+        }
+    }
+
     createGeneDataPoints = () => {
+        const name = _.map(this.props.modulesData.cellsByGene.cells, (item) => {
+                return `Cluster ${item.cluster_id}, Cell type: ${this.state.clusters[item.cluster_id]}`
+        });
         const trace = {
             x: _.map(this.props.modulesData.cellsByGene.cells, 'tsne_1'),
             y: _.map(this.props.modulesData.cellsByGene.cells, 'tsne_2'),
-            text: _.map(this.props.modulesData.cellsByGene.cells, 'cluster_id'),
+            text: name,
             customdata: _.map(this.props.modulesData.cellsByGene.cells, 'CPM'),
             mode: 'markers',
             type: 'scattergl',
@@ -96,7 +109,7 @@ class GeneExpressionForm extends Component {
                     thickness: 0.01
                 }
             },
-            hovertemplate: "<b>Cell-type cluster %{text}</b><br><br> CPM:  %{customdata} <extra></extra>",
+            hovertemplate: "<b>%{text}</b><br><br> CPM:  %{customdata} <extra></extra>",
             opacity: 0.5,
         }
         return [trace]
