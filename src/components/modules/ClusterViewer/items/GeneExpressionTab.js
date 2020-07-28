@@ -72,8 +72,8 @@ class GeneExpressionForm extends Component {
                 line: {
                     color: 'black'
                 },
-                fillcolor: colors[key],
-                x0: this.state.clusters[key]
+                showlegend: false,
+                fillcolor: colors[key]
             };
             plotTraces.push(trace)
         });

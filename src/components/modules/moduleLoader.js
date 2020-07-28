@@ -68,6 +68,7 @@ const ModuleLoader = (props) =>  {
             return (
                 <>
                     <ClusterViewer
+                        alias_ref={props.setting.alias_ref}
                         collection={props.collection}
                         getCellsByGene={props.getCellsByGene}
                         getGeneSuggestions={props.getGeneSuggestions}
