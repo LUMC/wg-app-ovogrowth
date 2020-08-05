@@ -32,8 +32,10 @@ class Page extends Component{
                         <ModuleLoader
                             modulesData={this.props.modulesData}
                             getGeneSuggestions={this.props.getGeneSuggestions}
+                            getCells={this.props.getCells}
                             getCellsByGene={this.props.getCellsByGene}
                             resetCellByGene={this.props.resetCellByGene}
+                            setActiveDataset={this.props.setActiveDataset}
                             onSubmit={this.props.onSubmit}
                             page={this.props.config.name}
                             key={`module-${this.props.config.reference}-${key}`}
@@ -49,8 +51,10 @@ class Page extends Component{
                 return (
                     <ModuleLoader
                         modulesData={this.props.modulesData}
+                        getCells={this.props.getCells}
                         getGeneSuggestions={this.props.getGeneSuggestions}
                         getCellsByGene={this.props.getCellsByGene}
+                        setActiveDataset={this.props.setActiveDataset}
                         resetCellByGene={this.props.resetCellByGene}
                         page={this.props.config.name}
                         key={`module-${this.props.config.reference}-${key}`}

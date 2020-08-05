@@ -6,7 +6,7 @@ export default (state=[], action) => {
             return action.payload.map( (item) => {
                 return {
                     title: item.symbol,
-                    description: `Nothing here yet `,
+                    description: item.description,
                     id: item.id
                 }
             })

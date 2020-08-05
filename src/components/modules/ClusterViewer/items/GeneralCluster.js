@@ -4,13 +4,14 @@ import Plot from 'react-plotly.js';
 import _ from 'lodash'
 import PageLoader from "../../../hooks/pageLoader";
 
-const initialState = {dataReady: false, clusters: {}}
+const initialState = {dataReady: false, clusters: {}, dataset: ''}
 
 class GeneralCluser extends Component {
 
     state = initialState;
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if(this.state.ds !== this.props.dataset) return true;
         return (!this.state.dataReady && nextState.dataReady)
     }
 
@@ -57,15 +58,15 @@ class GeneralCluser extends Component {
             </>
         )
     }
-    componentDidMount() {
-        if (_.isEmpty(this.state.clusters)){
+    render() {
+        console.log(this.props.modulesData.cells)
+        if (_.isEmpty(this.state.clusters) || this.state.ds !== this.props.dataset){
             this.setState({
                 clusters:
                     _.mapValues(_.keyBy(_.values(this.props.collection), 'cluster_id'), 'annotation')
             })
+            this.setState({ds: this.props.dataset})
         }
-    }
-    render() {
         if (this.props.modulesData.cells.length < 1) return <PageLoader frame={true} />
         if (!this.state.dataReady) this.setState({dataReady: true})
         return (
