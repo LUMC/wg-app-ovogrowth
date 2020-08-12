@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {
-    Container,
+    Container, Dropdown,
     Grid,
     Menu,
     Transition
@@ -19,24 +19,57 @@ const charPoses = {
     }
 };
 class App extends Component{
-    renderMenu(){
-        if (this.props.menu.length < 1){
+    renderSubMenu(items){
+        if(items.length < 1){
             return null
         }
         return (
-            <Menu inverted  widths={6} className={'mainMenu'}  pointing secondary  >
-                <Router history={history}>
+            <Dropdown text='More' pointing className='link item'>
+                <Dropdown.Menu>
                     {
-                        this.props.menu.map(
+                        items.map(
                             (item, key) => (
-                                <Menu.Item
+                                <Dropdown.Item
                                     name={item.reference}
                                     key={`menuItem-${key}`}
                                     as={Link}
-                                    to={'/'+item.reference}>
+                                    to={'/' + item.reference}>
                                     {item.name}
-                                </Menu.Item>
-                            ))
+                                </Dropdown.Item>
+                            )
+                        )
+                    }
+                </Dropdown.Menu>
+            </Dropdown>
+        )
+    }
+    renderMenu() {
+        if (this.props.menu.length < 1) {
+            return null
+        }
+        const subitems = []
+        return (
+            <Menu inverted widths={6} className={'mainMenu'} pointing secondary stackable>
+                <Router history={history}>
+                    {
+                        this.props.menu.map(
+                            (item, key) => {
+                                if(item.subitem){
+                                    subitems.push(item);
+                                    return null
+                                }
+                                return (
+                                    <Menu.Item
+                                        name={item.reference}
+                                        key={`menuItem-${key}`}
+                                        as={Link}
+                                        to={'/' + item.reference}>
+                                        {item.name}
+                                    </Menu.Item>)
+                            })
+                    }
+                    {
+                        this.renderSubMenu(subitems)
                     }
                 </Router>
             </Menu>

@@ -59,7 +59,6 @@ class GeneralCluser extends Component {
         )
     }
     render() {
-        console.log(this.props.modulesData.cells)
         if (_.isEmpty(this.state.clusters) || this.state.ds !== this.props.dataset){
             this.setState({
                 clusters:

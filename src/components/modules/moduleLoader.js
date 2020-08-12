@@ -14,6 +14,7 @@ import Page from "../Page";
 import {Form, Grid, Search} from "semantic-ui-react";
 import _ from "lodash";
 import GeneExpressionForm from "./ClusterViewer/items/GeneExpressionForm";
+import ImageModule from "./ImageModule";
 
 const ModuleLoader = (props) =>  {
     switch(props.setting.module) {
@@ -64,6 +65,7 @@ const ModuleLoader = (props) =>  {
                     protocolStatus={props.protocolStatus}
                 />
             );
+
         case 'cluster-viewer':
             return (
                 <>
@@ -78,6 +80,14 @@ const ModuleLoader = (props) =>  {
                         resetCellByGene={props.resetCellByGene}
                     />
 
+                </>
+            )
+        case 'image-module':
+            return (
+                <>
+                    <ImageModule
+                        collection={props.collection}
+                    />
                 </>
             )
         default:

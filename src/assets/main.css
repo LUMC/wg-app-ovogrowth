@@ -129,4 +129,9 @@ a.blue.label{
     width: 100%;
     height: 500px;
     border: none!important;
+    pointer-events:auto
+}
+.button-external{
+    padding-bottom: 20px;
+    float: right;
 }
