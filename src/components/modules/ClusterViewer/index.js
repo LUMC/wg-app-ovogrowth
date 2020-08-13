@@ -21,7 +21,6 @@ class ClusterViewer extends Component {
 
     setDataset = (e, data) =>{
         const index = _.map(this.props.collection, (item) => {return item.dataset.id}).indexOf(data.value)
-        console.log(index);
         this.setState({
             ds: data.value,
             datasetIndex: index
