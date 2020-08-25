@@ -44,12 +44,12 @@ class GeneralCluser extends Component {
                         height: 600,
                         hovermode: 'closest',
                         yaxis: {
-                            title: "test",
+                            title: "tSNE_2",
                             showgrid: false,
                             zeroline: false,
                         },
                         xaxis: {
-                            title: "test",
+                            title: "tSNE_1",
                             showgrid: false,
                             zeroline: false,
                         }
