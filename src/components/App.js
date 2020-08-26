@@ -9,6 +9,7 @@ import {
 import SplitText from 'react-pose-text';
 import {Link, Router} from "react-router-dom";
 import history from "../history";
+import Particles from "react-particles-js";
 
 const charPoses = {
     exit: { opacity: 0, y: 20 },
@@ -18,7 +19,11 @@ const charPoses = {
         delay: ({ charIndex }) => charIndex * 60
     }
 };
+
+
 class App extends Component{
+
+
     renderSubMenu(items){
         if(items.length < 1){
             return null
@@ -80,6 +85,35 @@ class App extends Component{
             <>
             <div className='appContent' >
                 <div className={'welcome'}>
+                    <Transition
+                        visible={this.props.sloganText}
+                        animation={"fade up"}
+                        duration={{show: 2000}}
+                    >
+                        <div>
+                            <Particles
+                                className={'particles'}
+                                params={{
+                                    "particles": {
+                                        "number": {
+                                            "value": 30
+                                        },
+                                        "size": {
+                                            "value": 10,
+                                            "random": true
+                                        },
+                                        "line_linked": {
+                                            "width": 2
+                                        },
+                                        "opacity": {
+                                            "anim":{
+                                                "anim.enable": false
+                                            }
+                                        }
+                                    }
+                                }}/>
+                        </div>
+                    </Transition>
                 <Container>
                     <Grid columns={1} >
                         <Grid.Row verticalAlign='middle' className={'welcome-box'} >

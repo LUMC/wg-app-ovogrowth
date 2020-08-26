@@ -78,6 +78,7 @@ class Page extends Component{
                         </Header>
                     </Grid.Column>
                 </Grid.Row>
+
                 {this.renderModules()}
             </Grid>
         )
