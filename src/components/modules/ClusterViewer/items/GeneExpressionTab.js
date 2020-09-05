@@ -37,10 +37,16 @@ class GeneExpressionForm extends Component {
                         yaxis: {
                             range: [0, 6],
                             zeroline: false,
+                            title:{
+                                text: this.props.dataset_scale
+                            }
                         },
                         xaxis: {
                             showline: true,
                             zeroline: true,
+                            font:{
+                                size : 10
+                            }
                         }
                     }}
                 />
@@ -59,7 +65,7 @@ class GeneExpressionForm extends Component {
         Object.keys(clusters).forEach((key) => {
             const trace = {
                 y: _.map(clusters[key], 'CPM'),
-                name: this.state.clusters[key],
+                name: this.props.annotation[key].description,
                 type: 'violin',
                 opacity: 0.5,
                 meanline: {
@@ -79,18 +85,10 @@ class GeneExpressionForm extends Component {
         });
         return plotTraces
     }
-    componentDidMount() {
-        if (_.isEmpty(this.state.clusters)){
-            this.setState({
-                clusters:
-                    _.mapValues(_.keyBy(_.values(this.props.collection), 'cluster_id'), 'annotation')
-            })
-        }
-    }
 
     createGeneDataPoints = () => {
         const name = _.map(this.props.modulesData.cellsByGene.cells, (item) => {
-                return `Cluster ${item.cluster_id}, Cell type: ${this.state.clusters[item.cluster_id]}`
+                return `Cluster ${item.cluster_id}, Cell type: ${this.props.annotation[item.cluster_id].description}`
         });
         const trace = {
             x: _.map(this.props.modulesData.cellsByGene.cells, 'tsne_1'),
@@ -102,7 +100,7 @@ class GeneExpressionForm extends Component {
             marker: {
                 color: _.map(this.props.modulesData.cellsByGene.cells, 'CPM'),
                 colorbar: {
-                    title: "CPM",
+                    title: this.props.dataset_scale,
                     thicknessmode: "fraction",
                     lenmode: "fraction",
                     len: 0.5,

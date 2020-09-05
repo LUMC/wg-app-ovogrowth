@@ -18,8 +18,9 @@ class GeneralCluser extends Component {
     createDataPoints = () => {
         const plotTraces = [];
         const clusters = _.groupBy(this.props.modulesData.cells, 'cluster_id')
+        const annotation = this.props.annotation
         Object.keys(clusters).forEach((key) => {
-            const name =this.state.clusters[key]
+            const name = annotation[key].description
             const trace = {
                 x: _.map(clusters[key], 'tsne_1'),
                 y: _.map(clusters[key], 'tsne_2'),

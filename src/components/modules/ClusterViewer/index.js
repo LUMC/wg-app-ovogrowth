@@ -12,7 +12,7 @@ const GeneExpressionTab = React.lazy(() => import("./items/GeneExpressionTab"));
 
 const initialState = {isLoading: false,
     value: '', selected: false, selectedGene: null,
-    graphSetting: 'all', ds:'', datasetOptions: [], datasetIndex:0
+    graphSetting: 'all', ds:'', datasetOptions: [], datasetIndex:0, annotation:[]
 }
 
 class ClusterViewer extends Component {
@@ -20,14 +20,24 @@ class ClusterViewer extends Component {
     state = initialState;
 
     setDataset = (e, data) =>{
-        const index = _.map(this.props.collection, (item) => {return item.dataset.id}).indexOf(data.value)
+        const index = _.map(this.props.collection.ds, (item) => {return item.dataset.id}).indexOf(data.value)
         this.setState({
             ds: data.value,
             datasetIndex: index
         });
-
+        this.setAnnotation(data.value)
         this.props.setActiveDataset(data.value)
         this.props.getCells()
+    }
+    setAnnotation = (ds_id) =>{
+        let annotation = this.props.collection.annotation.map((item) => {
+            if(item.dataset.id === ds_id){
+                return item
+            }
+            return null
+        });
+        annotation = annotation.filter(Boolean);
+        this.setState({"annotation": _.keyBy(annotation, 'cluster_id')})
     }
     loadImage = (image, type) => {
         if (!image)
@@ -52,23 +62,25 @@ class ClusterViewer extends Component {
         )
     }
     componentDidMount() {
-        const activeDs = this.props.collection[0].dataset;
+        const activeDs = this.props.collection.ds[0].dataset;
         this.setState({
             ds: activeDs.id,
             datasetOptions:
-                this.props.collection.map((item, key) =>{
+                this.props.collection.ds.map((item, key) =>{
                     return {
                         n:key,
                         text: item.type,
                         value: item.dataset.id
                     }
                 })});
+        this.setAnnotation(activeDs.id)
         this.props.setActiveDataset(activeDs.id)
         this.props.getCells()
+
     }
     render() {
         if (this.props.modulesData.cells.length < 1 ) return null
-        const activeSet = this.props.collection[this.state.datasetIndex]
+        const activeSet = this.props.collection.ds[this.state.datasetIndex]
         return (
             <>
                 <Grid.Row centered>
@@ -100,7 +112,6 @@ class ClusterViewer extends Component {
                 <Grid.Row centered>
                     <Grid.Column width={8}>
 
-
                         <p>
                             <b>Authors</b>{Parser(activeSet.citation)}
                             <b>Sequencing platform</b> {Parser(activeSet.data_origin)}
@@ -110,6 +121,7 @@ class ClusterViewer extends Component {
                 </Grid.Row>
                 <Suspense fallback={<PageLoader frame={true}/>}>
                     <GeneralCluser
+                        annotation={this.state.annotation}
                         dataset={this.state.ds}
                         collection={this.props.collection}
                         modulesData={this.props.modulesData}
@@ -119,6 +131,8 @@ class ClusterViewer extends Component {
                     (!_.isEmpty(this.props.modulesData.cellsByGene))?<PageLoader frame={true}/>:null
                 }>
                     <GeneExpressionTab
+                        dataset_scale={activeSet.expression_scale}
+                        annotation={this.state.annotation}
                         dataset={this.state.ds}
                         collection={this.props.collection}
                         modulesData={this.props.modulesData}

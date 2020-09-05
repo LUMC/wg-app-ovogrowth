@@ -24,6 +24,9 @@ class Page extends Component{
             return null
         }
     }
+    renderSpecificModule = (name) => {
+
+    }
     renderModules(){
         return this.props.config.settings.map(
             (setting, key) =>{
@@ -42,6 +45,27 @@ class Page extends Component{
                             collection={{
                                 'form': this.getCollection(setting.collection),
                                 'inputs': this.getCollection('inputs')
+                            }}
+                            setting={setting}
+                            protocolStatus={this.props.protocolStatus}
+                        />
+                    )
+                }
+                if (setting.module === 'cluster-viewer'){
+                    return(
+                        <ModuleLoader
+                            modulesData={this.props.modulesData}
+                            getGeneSuggestions={this.props.getGeneSuggestions}
+                            getCells={this.props.getCells}
+                            getCellsByGene={this.props.getCellsByGene}
+                            resetCellByGene={this.props.resetCellByGene}
+                            setActiveDataset={this.props.setActiveDataset}
+                            onSubmit={this.props.onSubmit}
+                            page={this.props.config.name}
+                            key={`module-${this.props.config.reference}-${key}`}
+                            collection={{
+                                'ds': this.getCollection(setting.collection),
+                                'annotation': this.getCollection('cluster_annotation')
                             }}
                             setting={setting}
                             protocolStatus={this.props.protocolStatus}

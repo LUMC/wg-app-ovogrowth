@@ -48,6 +48,10 @@ class AppContainer extends Component {
                                 collections.push(item.collection);
                                 collections.push('inputs');
                             }
+                            if(item.collection === 'expression_viewer'){
+                                collections.push(item.collection);
+                                collections.push('cluster_annotation');
+                            }
                             collections.push(item.collection)
                         }
                     }
